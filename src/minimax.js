@@ -102,14 +102,14 @@ const heuristic = (state, maximizingPlayer) => {
 
   returnNumber += (state.numLines(2, maximizingPlayer) + (state.numLines(3, maximizingPlayer) * 2) + (state.numLines(4, maximizingPlayer) * 4)) - (state.numLines(2, minimizingPlayer) + (state.numLines(3, minimizingPlayer) * 2) + (state.numLines(4, minimizingPlayer) * 4));
 
-  // console.log(`2 long for ${maximizingPlayer}:`,
-  //   state.numLines(2, maximizingPlayer),
-  //   `... 3 long for ${maximizingPlayer}:`,
-  //   state.numLines(3, maximizingPlayer),
-  //   `... 4 long for ${maximizingPlayer}:`,
-  //   state.numLines(4, maximizingPlayer),
-  //   `heuristic: `,
-  //   returnNumber);
+  console.log(`2 long for ${maximizingPlayer}:`,
+    state.numLines(2, maximizingPlayer),
+    `... 3 long for ${maximizingPlayer}:`,
+    state.numLines(3, maximizingPlayer),
+    `... 4 long for ${maximizingPlayer}:`,
+    state.numLines(4, maximizingPlayer),
+    `heuristic: `,
+    returnNumber);
 
   return returnNumber;
 }
@@ -144,7 +144,7 @@ const minimax = (state, depth, maximizingPlayer) => {
   if (currentPlayer === maximizingPlayer) {
     return possibleStates.reduce((a, b) => Math.max(minimax(a, depth-1, maximizingPlayer), minimax(b, depth-1, maximizingPlayer)));
   } else {
-    return possibleStates.reduce((a, b) => Math.min(minimax(a, depth-1, maximizingPlayer), minimax(b, depth-1, maximizingPlayer)));
+    return possibleStates.reduce((a, b) => Math.min(minimax(a, depth-1, minimizingPlayer), minimax(b, depth-1, minimizingPlayer)));
   }
 }
 
