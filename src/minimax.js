@@ -43,7 +43,7 @@ const makeMove = (state) => {
   // It evaluates each possible successor state with
   // minimax, and performs the move that leads to the best
   // state.
-  const depth = 4;
+  const depth = 3;
 
   let bestMoveIndex = null;
   let bestMoveValue = null;
@@ -96,23 +96,39 @@ const heuristic = (state, maximizingPlayer) => {
   const minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
   let returnNumber = 0;
 
-  console.log(state);
+  // console.log(state);
   //
   //Your code here.  Don't return random, obviously.
 
-  returnNumber += (state.numLines(2, maximizingPlayer) + (state.numLines(3, maximizingPlayer) * 2) + (state.numLines(4, maximizingPlayer) * 4)) - (state.numLines(2, minimizingPlayer) + (state.numLines(3, minimizingPlayer) * 2) + (state.numLines(4, minimizingPlayer) * 4));
+  //  has no defensive instinct
+  // returnNumber += (state.numLines(2, maximizingPlayer) + (state.numLines(3, maximizingPlayer) * 5) + (state.numLines(4, maximizingPlayer) * 10)) - (state.numLines(2, minimizingPlayer) + (state.numLines(3, minimizingPlayer) * 5) + (state.numLines(4, minimizingPlayer) * 10));
 
-  console.log(`2 long for ${maximizingPlayer}:`,
-    state.numLines(2, maximizingPlayer),
-    `... 3 long for ${maximizingPlayer}:`,
-    state.numLines(3, maximizingPlayer),
-    `... 4 long for ${maximizingPlayer}:`,
-    state.numLines(4, maximizingPlayer),
-    `heuristic: `,
-    returnNumber);
+
+  returnNumber += (state.numLines(2, maximizingPlayer) + (state.numLines(3, maximizingPlayer) * 15) + (state.numLines(4, maximizingPlayer) * 10)) - (state.numLines(2, minimizingPlayer) + (state.numLines(3, minimizingPlayer) * 15) + (state.numLines(4, minimizingPlayer) * 10));
+
+  // const findValueForPlayer = (player)=>{
+  //   return [2,3,4].reduce((total, lineLength) => {
+  //     return total + state.numLines(lineLength, player)
+  //   }, 0);
+  // }
+
+
+  // console.log(`2 long for ${maximizingPlayer}:`,
+  //   state.numLines(2, maximizingPlayer),
+  //   `... 3 long for ${maximizingPlayer}:`,
+  //   state.numLines(3, maximizingPlayer),
+  //   `... 4 long for ${maximizingPlayer}:`,
+  //   state.numLines(4, maximizingPlayer),
+  //   `heuristic: `,
+  //   returnNumber);
 
   return returnNumber;
 }
+
+
+
+
+
 
 
 
@@ -135,18 +151,56 @@ You'll also probably need to use state.nextMovePlayer,
 which returns whether the next moving player is 'x' or 'o',
 to see if you are maximizing or minimizing.
 */
+
+
+
+// james solution
+// const minimax = (state, depth, maximizingPlayer) => {
+//   var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
+//   var possibleStates = state.nextStates();
+//   var currentPlayer = state.nextMovePlayer;
+//   if (depth === 0 || possibleStates.length === 0) {
+//     return heuristic(state, maximizingPlayer);
+//   } else {
+//     const stateValues = possibleStates.map((nextState) => {
+//       return minimax(nextState, depth - 1, maximizingPlayer);
+//     });
+
+//     return (maximizingPlayer === currentPlayer) ?
+//       Math.max.apply(null, stateValues) : Math.min.apply(null, stateValues);
+//   }
+// }
+
 const minimax = (state, depth, maximizingPlayer) => {
   var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
   var possibleStates = state.nextStates();
   var currentPlayer = state.nextMovePlayer;
   //Your code here.
-  if (depth === 0 || possibleStates) return heuristic(state, maximizingPlayer);
-  if (currentPlayer === maximizingPlayer) {
-    return possibleStates.reduce((a, b) => Math.max(minimax(a, depth-1, maximizingPlayer), minimax(b, depth-1, maximizingPlayer)));
+  if (depth === 0 || possibleStates.length === 0) {
+    return heuristic(state, maximizingPlayer);
   } else {
-    return possibleStates.reduce((a, b) => Math.min(minimax(a, depth-1, minimizingPlayer), minimax(b, depth-1, minimizingPlayer)));
+    let states = possibleStates.map((a) => minimax(a, depth - 1, maximizingPlayer),
+      0);
+    return (currentPlayer === maximizingPlayer) ? states.reduce((a, b) => Math.max(a, b)) : states.reduce((a, b) => Math.min(a, b))
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

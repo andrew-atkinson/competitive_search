@@ -27,7 +27,7 @@ const heuristic = minimaxLib.heuristic;
 describe("Testing some basic functionality for the heuristics", function() {
 
   /*First off, this function should return some kind of number.*/
-  xit("Returns a number after being given a state", function() {
+  it("Returns a number after being given a state", function() {
     const s = new State();
     expect(typeof(heuristic(s, 'x')) == 'number').to.equal(true);
     expect(typeof(heuristic(s, 'o')) == 'number').to.equal(true);
@@ -41,7 +41,7 @@ describe("Testing some basic functionality for the heuristics", function() {
      So if we switch the players, we should get exactly the same value, except
      multiplied by -1.*/
 
-  xit("Returns the negative of the value for one player when maximizing player is switched", function() {
+  it("Returns the negative of the value for one player when maximizing player is switched", function() {
     for (let x = 0; x < 100; x++) {
       let s = new State();
       for (var z = 0; z < 7; z++) {
@@ -55,7 +55,7 @@ describe("Testing some basic functionality for the heuristics", function() {
      the program returns some kind of reasonable values in cases when, although
      there are equal numbers of pieces on the board, 'x' has more in a line
      together than 'o' does. */
-  xit("It returns a higher score when 'x' has two in a single line, and 'o' has two disconnected", function() {
+  it("It returns a higher score when 'x' has two in a single line, and 'o' has two disconnected", function() {
     //Make a new game state
     let s = new State();
     s = s.move(1) //X moves
@@ -69,7 +69,7 @@ describe("Testing some basic functionality for the heuristics", function() {
     expect(lower < higher).to.equal(true);
   });
 
-  xit("It returns a higher score when 'x' has three in a single line, and 'o' has two connected, and one not connected", function() {
+  it("It returns a higher score when 'x' has three in a single line, and 'o' has two connected, and one not connected", function() {
     let s = new State();
     s = s.move(1) //X moves
     s = s.move(0) //O moves
@@ -84,7 +84,7 @@ describe("Testing some basic functionality for the heuristics", function() {
     expect(lower < higher).to.equal(true);
   });
 
-  xit("It returns a higher score when 'x' has four in a single line, and 'o' doens'true", function() {
+  it("It returns a higher score when 'x' has four in a single line, and 'o' doens'true", function() {
     //Make a new game state
     let s = new State();
     s = s.move(0) //X moves
