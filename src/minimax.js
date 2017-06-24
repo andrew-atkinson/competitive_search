@@ -96,16 +96,11 @@ const heuristic = (state, maximizingPlayer) => {
   const minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
   let returnNumber = 0;
 
-  // console.log(state.board);
-
+  console.log(state);
+  //
   //Your code here.  Don't return random, obviously.
 
-  returnNumber += (state.numLines(2, maximizingPlayer)
-                  + (state.numLines(3, maximizingPlayer) * 2)
-                  + (state.numLines(4, maximizingPlayer) * 4))
-                  - (state.numLines(2, minimizingPlayer)
-                  + (state.numLines(3, minimizingPlayer) * 2)
-                  + (state.numLines(4, minimizingPlayer) * 4));
+  returnNumber += (state.numLines(2, maximizingPlayer) + (state.numLines(3, maximizingPlayer) * 2) + (state.numLines(4, maximizingPlayer) * 4)) - (state.numLines(2, minimizingPlayer) + (state.numLines(3, minimizingPlayer) * 2) + (state.numLines(4, minimizingPlayer) * 4));
 
   // console.log(`2 long for ${maximizingPlayer}:`,
   //   state.numLines(2, maximizingPlayer),
@@ -145,7 +140,12 @@ const minimax = (state, depth, maximizingPlayer) => {
   var possibleStates = state.nextStates();
   var currentPlayer = state.nextMovePlayer;
   //Your code here.
-  return Math.random();
+  if (depth === 0 || possibleStates) return heuristic(state, maximizingPlayer);
+  if (currentPlayer === maximizingPlayer) {
+    return possibleStates.reduce((a, b) => Math.max(minimax(a, depth-1, maximizingPlayer), minimax(b, depth-1, maximizingPlayer)));
+  } else {
+    return possibleStates.reduce((a, b) => Math.min(minimax(a, depth-1, maximizingPlayer), minimax(b, depth-1, maximizingPlayer)));
+  }
 }
 
 
